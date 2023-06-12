@@ -97,7 +97,7 @@ const Login = () => {
             onClick={handleLogin}
             disabled={loading}
           >
-            Đăng ký
+            Đăng nhập
           </Button>
           <div className="flex flex-row items-center gap-2 pb-[16px] border-b-[1px] border-b-[#D3D3D3]">
             <Typography

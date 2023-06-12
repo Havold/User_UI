@@ -152,6 +152,7 @@ const Register = () => {
               Đăng ký
             </Button>
             <Button
+              onClick={() => navigate("/auth/login")}
               sx={{
                 background: "#4F92E0",
                 color: "#fff",

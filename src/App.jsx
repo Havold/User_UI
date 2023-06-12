@@ -7,6 +7,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers";
 import NormalLayout from "layout/";
 import Register from "pages/Register";
 import Login from "pages/Login";
+import Student from "pages/Student";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
             <Route path="" element={<NormalLayout />}>
               <Route path="auth/register" element={<Register />} />
               <Route path="auth/login" element={<Login />} />
+              <Route path="student" element={<Student />} />
             </Route>
           </Routes>
         </BrowserRouter>
