@@ -6,14 +6,20 @@ import MyCheckBox from "components/MyCheckBox";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { login } from "services/auth";
-
+import validator from "validator";
+import { useDispatch } from "react-redux";
+import { storeUser } from "reducers/userReducer";
+import { setLoginStatus } from "reducers/loginStatusReducer";
+import useAPI from "hooks/useApi";
 const Login = () => {
   const [formValue, setFormValue] = useState({
     email: "",
     password: "",
   });
+  const loginRequest = useAPI({ queryFn: (data) => login(data) });
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const handleChange = (e) => {
     const { name, value } = e.currentTarget;
     setFormValue({
@@ -22,16 +28,20 @@ const Login = () => {
     });
   };
   const handleLogin = () => {
-    if (formValue.email === "") return toast.error("Email không thể trống");
+    if (!validator.isEmail(formValue.email))
+      return toast.error("Email không hợp lệ");
     if (formValue.password === "")
       return toast.error("Mật khẩu không thể trống");
     setLoading(true);
-    login({email: formValue.email, password: formValue.password})
+    loginRequest
+      .run({ email: formValue.email, password: formValue.password })
       .then((res) => {
+        dispatch(storeUser(res.data.data));
+        dispatch(setLoginStatus({ isChecking: false, isLogin: true }));
         toast.success("Đăng nhập thành công");
         navigate("/student");
       })
-      .catch((err) => toast.error(err.response.data.message))
+      .catch((err) => {})
       .finally(() => setLoading(false));
   };
   return (
@@ -84,7 +94,6 @@ const Login = () => {
             </Typography>
           </div>
           <Button
-
             sx={{
               background: "#15CDCB",
               color: "#fff",

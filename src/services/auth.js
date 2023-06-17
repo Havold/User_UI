@@ -19,8 +19,8 @@ export const register = (payload) => {
     data: payload,
   });
 };
-export const login = (payload) => {
-  return axiosForManagerAPI
+export const login = async (payload) => {
+  return await axiosForManagerAPI
     .request({
       method: "post",
       url: AUTHENTICATION_URLS.LOGIN,
@@ -32,6 +32,14 @@ export const login = (payload) => {
       ] = `Bearer ${response.data.data.access_token}`;
       saveRefreshToken(response.data.data.refresh_token);
       saveAccessToken(response.data.data.access_token);
+      return getCurrentUser();
+    });
+};
+export const getCurrentUser = async () => {
+  return await axiosForManagerAPI
+    .request({ method: "get", url: "/v1/student/current" })
+    .then((response) => {
+      return Promise.resolve(response);
     });
 };
 export const validateToken = (token) => {
