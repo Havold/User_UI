@@ -39,8 +39,8 @@ const MyInput = ({
         <></>
       )}
       <Input
+        value={value}
         onBlur={onBlur}
-        defaultValue={value}
         autoComplete={"none"}
         disabled={disabled}
         onChange={onChange}
@@ -56,6 +56,9 @@ const MyInput = ({
           "&.Mui-focused ": {
             borderColor: "primary.main",
             boxShadow: " 0px 0px 5px 5px #C3E8FF",
+          },
+          "&.Mui-disabled": {
+            background: "#F3EEEE",
           },
           transition: "all 0.15s",
         }}

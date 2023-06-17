@@ -39,7 +39,6 @@ const Login = () => {
         dispatch(storeUser(res.data.data));
         dispatch(setLoginStatus({ isChecking: false, isLogin: true }));
         toast.success("Đăng nhập thành công");
-        navigate("/student");
       })
       .catch((err) => {})
       .finally(() => setLoading(false));

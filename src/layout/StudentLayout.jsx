@@ -1,13 +1,16 @@
-import { Box, SvgIcon, Typography } from "@mui/material";
+import { Box, CircularProgress, SvgIcon, Typography } from "@mui/material";
 import { ReactComponent as IconWarning } from "assets/icon/icon_warning.svg";
 import { ReactComponent as IconUser } from "assets/icon/icon_user.svg";
 import { ReactComponent as IconHome } from "assets/icon/icon_home.svg";
 import { ReactComponent as IconEducation } from "assets/icon/icon_mortarboard.svg";
-
 import React from "react";
-import { Link, Outlet, useLocation } from "react-router-dom";
+import { Link, Navigate, Outlet, useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const StudentLayout = () => {
+  const loginStatus = useSelector((state) => state.loginStatus);
+  if (loginStatus.isChecking) return <CircularProgress />;
+  if (!loginStatus.isLogin) return <Navigate to="/auth/login" />;
   return (
     <div className="flex flex-col  pt-4 gap-4 items-center w-full h-full p-8">
       <Typography
@@ -38,7 +41,7 @@ const StudentLayout = () => {
           Các thông tin nhập vào phải là tiếng Việt có dấu.
         </Typography>
       </div>
-      <div className="flex flex-col border-[1px] border-[#D3D3D3] rounded-[12px] h-[500px] w-full pt-10 px-6 gap-8">
+      <div className="flex flex-col border-[1px] border-[#D3D3D3] rounded-[12px] w-full py-10 px-6 gap-8">
         <div className="flex flex-row gap-24 items-center justify-center">
           <Tab pathname="/info" title="THÔNG TIN CÁ NHÂN" icon={IconUser} />
           <Tab pathname="/contact" title="THÔNG TIN LIÊN LẠC" icon={IconHome} />

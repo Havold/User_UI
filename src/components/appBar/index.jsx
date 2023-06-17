@@ -1,9 +1,12 @@
 import React from "react";
 import { ReactComponent as Logo } from "assets/img/logo.svg";
 import { Button, CircularProgress, SvgIcon, Typography } from "@mui/material";
-import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { login } from "services/auth";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import useAPI from "hooks/useApi";
+import { logout } from "services/auth";
+import { toast } from "react-toastify";
+import { setLoginStatus } from "reducers/loginStatusReducer";
 
 const AppBar = () => {
   return (
@@ -20,12 +23,25 @@ const AppBar = () => {
   );
 };
 const UserAuth = () => {
+  const navigate = useNavigate()
   const loginStatus = useSelector((state) => state.loginStatus);
+  const logoutRequest = useAPI({ queryFn: logout });
+  const dispatch = useDispatch();
+  const handleLogout = () => {
+    logoutRequest.run().then((res) => {
+      toast.success("Logout success");
+      dispatch(setLoginStatus({ isLogin: false, isChecking: false }));
+      navigate("auth/login")
+    });
+  };
   if (loginStatus.isChecking) return <CircularProgress />;
   if (loginStatus.isLogin)
     return (
-      <Button sx={{ background: "#fff", ":hover": { background: "#fff" } }}>
-        Logout
+      <Button
+        onClick={handleLogout}
+        sx={{ background: "#fff", ":hover": { background: "#fff" } }}
+      >
+        Đăng xuất
       </Button>
     );
   return (

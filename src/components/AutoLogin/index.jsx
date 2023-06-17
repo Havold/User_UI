@@ -7,7 +7,7 @@ import {
   getCurrentUser,
   validateToken,
 } from "services/auth";
-import { axiosForInsertCatchAPI } from "services/axios";
+import { axiosForManagerAPI } from "services/axios";
 import {
   clearTokens,
   getAccessToken,
@@ -42,7 +42,7 @@ const AutoLogin = () => {
         return;
       }
       console.log("use old access_token");
-      axiosForInsertCatchAPI.defaults.headers.common[
+      axiosForManagerAPI.defaults.headers.common[
         "Authorization"
       ] = `Bearer ${getAccessToken()}`;
       getCurrentUser()

@@ -35,6 +35,9 @@ export const login = async (payload) => {
       return getCurrentUser();
     });
 };
+export const logout = async () => {
+  return await axiosForManagerAPI.delete(AUTHENTICATION_URLS.LOGOUT);
+};
 export const getCurrentUser = async () => {
   return await axiosForManagerAPI
     .request({ method: "get", url: "/v1/student/current" })
