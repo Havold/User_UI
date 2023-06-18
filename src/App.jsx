@@ -12,6 +12,7 @@ import AutoLogin from "components/AutoLogin";
 import StudentInfo from "pages/Student/StudentInfo";
 import AuthLayout from "layout/AuthLayout";
 import StudentContactInfo from "pages/Student/StudentContactInfo";
+import StudentPriorityInfo from "pages/Student/StudentPriorityInfo";
 
 function App() {
   return (
@@ -28,7 +29,8 @@ function App() {
               </Route>
               <Route path="" element={<StudentLayout />}>
                 <Route path="info" element={<StudentInfo />} />
-                <Route path="contact" element={<StudentContactInfo />} />
+                <Route path="contact" element={<StudentContactInfo />} />{" "}
+                <Route path="priority" element={<StudentPriorityInfo />} />
                 <Route index element={<Navigate to="info" />} />
                 <Route path="*" element={<Navigate to="info" />} />
               </Route>{" "}
