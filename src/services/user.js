@@ -9,6 +9,33 @@ export const updateUser = async (payload) => {
     })
     .then((res) => res.data);
 };
+export const addMajor = async (payload) => {
+  return await axiosForManagerAPI
+    .request({
+      method: "post",
+      url: "/v1/student/current/major",
+      data: payload,
+    })
+    .then((res) => res.data);
+};
+export const updateMajor = async (payload) => {
+  return await axiosForManagerAPI
+    .request({
+      method: "put",
+      url: "/v1/student/current/major",
+      data: payload,
+    })
+    .then((res) => res.data);
+};
+export const deleteMajor = async (payload) => {
+  return await axiosForManagerAPI
+    .request({
+      method: "delete",
+      url: "/v1/student/current/major",
+      data: payload,
+    })
+    .then((res) => res.data);
+};
 export const registerContest = async (payload) => {
   return await axiosForManagerAPI
     .request({
