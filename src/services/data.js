@@ -374,6 +374,7 @@ export const dantoc = [
   "Không rõ",
 ];
 export const district_list = {
+  "": [],
   "Lào Cai": [
     "Lào Cai",
     "Bát Xát",
@@ -1207,6 +1208,7 @@ export const district_list = {
   ],
 };
 export const commune_list = {
+  "": { "": [] },
   "Lào Cai": {
     "Lào Cai": [
       "Duyên Hải",
@@ -13254,4 +13256,3 @@ export const province_list = [
   "Bắc Kạn",
   "Tuyên Quang",
 ];
-

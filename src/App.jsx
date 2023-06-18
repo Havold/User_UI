@@ -13,6 +13,8 @@ import StudentInfo from "pages/Student/StudentInfo";
 import AuthLayout from "layout/AuthLayout";
 import StudentContactInfo from "pages/Student/StudentContactInfo";
 import StudentPriorityInfo from "pages/Student/StudentPriorityInfo";
+import RegisterContest from "pages/Student/RegisterContest";
+import RegisterLayout from "layout/RegisterLayout";
 
 function App() {
   return (
@@ -30,10 +32,13 @@ function App() {
               <Route path="" element={<StudentLayout />}>
                 <Route path="info" element={<StudentInfo />} />
                 <Route path="contact" element={<StudentContactInfo />} />{" "}
-                <Route path="priority" element={<StudentPriorityInfo />} />
+                <Route path="priority" element={<StudentPriorityInfo />} />{" "}
                 <Route index element={<Navigate to="info" />} />
                 <Route path="*" element={<Navigate to="info" />} />
               </Route>{" "}
+              <Route path="register_contest" element={<RegisterLayout />}>
+                <Route path="" element={<RegisterContest />} />
+              </Route>
               <Route path="*" element={<Navigate to="" />} />
             </Route>
           </Routes>

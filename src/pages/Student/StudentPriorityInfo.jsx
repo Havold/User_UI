@@ -11,36 +11,19 @@ import MyInputDate from "components/MyInputDate";
 import MySelect from "components/MySelect";
 import dayjs from "dayjs";
 import useAPI from "hooks/useApi";
-import React, { useState } from "react";
+import useGetUser from "hooks/useGetUser";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { district_list, province_list } from "services/data";
 import { updateUser } from "services/user";
 
 const StudentPriorityInfo = () => {
-  const [formValue, setFormValue] = useState({
-    graduation_status: "grade_12",
-    priority_area: "KV2-NT",
-    priority_object: "UT1",
-    graduated_year: "2023",
-    grade_10: {
-      province: "Bến Tre",
-      district: "Mỏ Cày Nam",
-      school_name: "THPT Mỏ Cày Nam",
-      id: "648db28da71c984c80a74721",
-    },
-    grade_11: {
-      province: "Bến Tre",
-      district: "Mỏ Cày Nam",
-      school_name: "THPT Mỏ Cày Nam",
-      id: "648db28da71c984c80a74720",
-    },
-    grade_12: {
-      province: "Bến Tre",
-      district: "Mỏ Cày Nam",
-      school_name: "THPT Mỏ Cày Nam",
-      id: "648db28da71c984c80a7471f",
-    },
-  });
+  const navigate = useNavigate();
+  const getUser = useGetUser();
+  const currentUser = useSelector((state) => state.currentUser);
+  const [formValue, setFormValue] = useState(defaultValue);
   const [samePlace, toggleSamePlace] = useToggle(false);
   const updateRequest = useAPI({ queryFn: (payload) => updateUser(payload) });
   const handleChange = (e) => {
@@ -51,10 +34,20 @@ const StudentPriorityInfo = () => {
     updateRequest
       .run({ priority_info: { ...formValue } })
       .then((res) => {
+        getUser.run();
         toast.success("Cập nhật thành công");
       })
       .catch(() => {});
   };
+  useEffect(() => {
+    if (currentUser) {
+      setFormValue({
+        ...(currentUser.priority_info
+          ? currentUser.priority_info
+          : defaultValue),
+      });
+    }
+  }, [currentUser]);
   return (
     <div className="flex flex-col p-8 border-[1px] border-[#D3D3D3] rounded-[12px] gap-3">
       <Backdrop sx={{ zIndex: 20 }} open={updateRequest.loading}>
@@ -125,6 +118,7 @@ const StudentPriorityInfo = () => {
       </div>
       <div className="flex flex-row gap-3 ml-auto">
         <Button
+          onClick={() => navigate("/register_contest")}
           sx={{
             background: "#4FE0B5",
             fontSize: 14,
@@ -194,5 +188,26 @@ const InputGradeInfo = ({ grade, setFormValue, formValue }) => {
       />
     </div>
   );
+};
+const defaultValue = {
+  graduation_status: "",
+  priority_area: "",
+  priority_object: "",
+  graduated_year: "223",
+  grade_10: {
+    province: "",
+    district: "",
+    school_name: "",
+  },
+  grade_11: {
+    province: "",
+    district: "",
+    school_name: "",
+  },
+  grade_12: {
+    province: "",
+    district: "",
+    school_name: "",
+  },
 };
 export default StudentPriorityInfo;

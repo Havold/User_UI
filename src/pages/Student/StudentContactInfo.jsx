@@ -9,6 +9,7 @@ import { useToggle } from "@uidotdev/usehooks";
 import MyInput from "components/MyInput";
 import MySelect from "components/MySelect";
 import useAPI from "hooks/useApi";
+import useGetUser from "hooks/useGetUser";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
@@ -17,7 +18,23 @@ import { updateUser } from "services/user";
 
 const StudentContactInfo = () => {
   const currentUser = useSelector((state) => state.currentUser);
-  const [formValue, setFormValue] = useState(null);
+  const [formValue, setFormValue] = useState({
+    household: {
+      phone: "",
+      province: "",
+      district: "",
+      commune: "",
+      house_number: "",
+    },
+    contact: {
+      phone: "",
+      province: "",
+      district: "",
+      commune: "",
+      house_number: "",
+    },
+  });
+  const getUser = useGetUser();
   const [sameAddress, toggleSameAddress] = useToggle(false);
   const updateRequest = useAPI({ queryFn: (payload) => updateUser(payload) });
   const isFormComplete = () => {
@@ -53,6 +70,7 @@ const StudentContactInfo = () => {
         },
       })
       .then((res) => {
+        getUser.run();
         toast.success("Cập nhật thành công");
       })
       .catch((err) => {});
@@ -60,8 +78,9 @@ const StudentContactInfo = () => {
   useEffect(() => {
     if (currentUser)
       setFormValue({
-        ...currentUser.contact_info,
-        contact_email: currentUser.email,
+        ...formValue,
+        ...currentUser?.contact_info,
+        contact_email: currentUser?.email,
       });
   }, [currentUser]);
 
@@ -78,7 +97,7 @@ const StudentContactInfo = () => {
       ...prev,
       contact: { ...prev.contact, [name]: value },
     }));
-  }
+  };
   if (!formValue) return <></>;
   return (
     <div className="flex flex-col p-8 border-[1px] border-[#D3D3D3] rounded-[12px] gap-3">
@@ -100,34 +119,39 @@ const StudentContactInfo = () => {
         <MySelect
           label="Tỉnh/Thành phố hộ khẩu"
           optionList={province_list}
-          value={formValue.household.province}
+          value={formValue?.household?.province}
           onChange={handleHouseHoldChange}
           name="province"
         />
         <MySelect
           label="Quận/Huyện hộ khẩu"
           disabled={!formValue.household.province}
-          optionList={district_list[formValue.household.province]}
-          value={formValue.household.district}
+          optionList={district_list[formValue?.household?.province]}
+          value={formValue?.household?.district}
           onChange={handleHouseHoldChange}
           name="district"
         />
         <MySelect
           label="Phường/xã hộ khẩu"
           optionList={
-            commune_list[formValue.household.province][
-              formValue.household.district
+            commune_list[formValue?.household?.province][
+              formValue?.household?.district
             ]
           }
-          disabled={!formValue.household.district}
-          value={formValue.household.commune}
+          disabled={!formValue?.household?.district}
+          value={formValue?.household?.commune}
           onChange={handleHouseHoldChange}
           name="commune"
         />
-        <MyInput label="Số nhà" value={formValue.household.house_number} />
+        <MyInput
+          label="Số nhà"
+          value={formValue?.household?.house_number}
+          onChange={handleHouseHoldChange}
+          name="house_number"
+        />
         <MyInput
           label="Điện thoại liên lạc"
-          value={formValue.household.phone}
+          value={formValue?.household?.phone}
           name="phone"
           onChange={handleHouseHoldChange}
         />
@@ -149,35 +173,40 @@ const StudentContactInfo = () => {
         <div className="flex flex-row gap-7">
           <MySelect
             label="Tỉnh/Thành phố thường trú"
-            value={formValue.contact.province}
+            value={formValue?.contact?.province}
             optionList={province_list}
             onChange={handleContactChange}
             name="province"
           />
           <MySelect
             label="Quận/Huyện thường trú"
-            value={formValue.contact.district}
-            disabled={!formValue.contact.province}
-            optionList={district_list[formValue.contact.province]}
+            value={formValue?.contact?.district}
+            disabled={!formValue?.contact?.province}
+            optionList={district_list[formValue?.contact?.province]}
             onChange={handleContactChange}
             name="district"
           />
           <MySelect
             label="Phường/xã thường trú"
-            value={formValue.contact.commune}
+            value={formValue?.contact?.commune}
             optionList={
-              commune_list[formValue.contact.province][
-                formValue.contact.district
+              commune_list[formValue?.contact?.province][
+                formValue?.contact?.district
               ]
             }
-            disabled={!formValue.contact.district}
+            disabled={!formValue?.contact?.district}
             onChange={handleContactChange}
             name="commune"
           />
-          <MyInput label="Số nhà" value={formValue.contact.house_number} />
+          <MyInput
+            label="Số nhà"
+            value={formValue?.contact?.house_number}
+            onChange={handleContactChange}
+            name="house_number"
+          />
           <MyInput
             label="Điện thoại liên lạc"
-            value={formValue.contact.phone}
+            value={formValue?.contact?.phone}
             name="phone"
             onChange={handleContactChange}
           />

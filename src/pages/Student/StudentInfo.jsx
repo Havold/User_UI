@@ -16,6 +16,7 @@ import useAPI from "hooks/useApi";
 import { updateUser, updateUserCCCD } from "services/user";
 import { toast } from "react-toastify";
 import dayjs from "dayjs";
+import useGetUser from "hooks/useGetUser";
 
 const defaultForm = {
   name: "",
@@ -41,6 +42,8 @@ const StudentInfo = () => {
     const { name, value } = e.target;
     setFormValue((prev) => ({ ...prev, [name]: value }));
   };
+  const getUser = useGetUser();
+
   const handleUpdate = () => {
     updateRequest
       .run({
@@ -62,6 +65,7 @@ const StudentInfo = () => {
             CCCD_back: formValue.CCCD_back,
           })
           .then((res) => {
+            getUser.run();
             toast.success("Cập nhật thành công");
           })
           .catch((err) => {
@@ -74,15 +78,15 @@ const StudentInfo = () => {
     if (currentUser)
       setFormValue({
         name: currentUser.name,
-        CCCD: currentUser.CCCD,
-        birth: dayjs(currentUser.birth),
-        sex: currentUser.sex ? "Nam" : "Nữ",
-        birth_place: currentUser.place_of_birth,
-        nationality: currentUser.nationality,
-        nation: currentUser.nation,
-        religion: currentUser.religion,
-        CCCD_create_date: dayjs(currentUser.CCCD_detail.date_provide),
-        CCCD_create_place: currentUser.CCCD_detail.provide_by,
+        CCCD: currentUser?.CCCD || "",
+        birth: dayjs(currentUser?.birth),
+        sex: currentUser?.sex ? "Nam" : "Nữ",
+        birth_place: currentUser?.place_of_birth,
+        nationality: currentUser?.nationality,
+        nation: currentUser?.nation,
+        religion: currentUser?.religion,
+        CCCD_create_date: dayjs(currentUser?.CCCD_detail?.date_provide),
+        CCCD_create_place: currentUser?.CCCD_detail?.provide_by,
       });
   }, [currentUser]);
 

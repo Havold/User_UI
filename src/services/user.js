@@ -9,6 +9,15 @@ export const updateUser = async (payload) => {
     })
     .then((res) => res.data);
 };
+export const registerContest = async (payload) => {
+  return await axiosForManagerAPI
+    .request({
+      method: "post",
+      url: "/v1/student/current/register_contest",
+      data: payload,
+    })
+    .then((res) => res.data);
+};
 export const updateUserCCCD = async (payload) => {
   const form_data = new FormData();
   form_data.append("cccd_image", payload.CCCD_front);
