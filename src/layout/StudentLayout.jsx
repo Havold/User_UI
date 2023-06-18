@@ -4,7 +4,12 @@ import { ReactComponent as IconUser } from "assets/icon/icon_user.svg";
 import { ReactComponent as IconHome } from "assets/icon/icon_home.svg";
 import { ReactComponent as IconEducation } from "assets/icon/icon_mortarboard.svg";
 import React from "react";
-import { Link, Navigate, Outlet, useLocation } from "react-router-dom";
+import {
+  Link,
+  Navigate,
+  Outlet,
+  useLocation,
+} from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const StudentLayout = () => {
