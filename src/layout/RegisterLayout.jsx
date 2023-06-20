@@ -21,7 +21,7 @@ const RegisterLayout = () => {
       >
         KỲ THI TUYỂN SINH 2023
       </Typography>
-      <div className="flex flex-col border-[1px] border-[#D3D3D3] rounded-[12px] w-full py-10 px-6 gap-8">
+      <div className="flex flex-col border-[1px] border-[#D3D3D3] rounded-[12px] w-full py-10 px-6 gap-8 pb-8">
         <Outlet />
       </div>
     </div>

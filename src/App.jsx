@@ -15,6 +15,8 @@ import StudentContactInfo from "pages/Student/StudentContactInfo";
 import StudentPriorityInfo from "pages/Student/StudentPriorityInfo";
 import RegisterContest from "pages/Student/RegisterContest";
 import RegisterLayout from "layout/RegisterLayout";
+import ExamInfo from "pages/Student/ExamInfo";
+import PointInfo from "pages/Student/PointInfo";
 
 function App() {
   return (
@@ -37,6 +39,8 @@ function App() {
                 <Route path="*" element={<Navigate to="info" />} />
               </Route>{" "}
               <Route path="register_contest" element={<RegisterLayout />}>
+                <Route path="exam_info" element={<ExamInfo />} />{" "}
+                <Route path="point_info" element={<PointInfo />} />
                 <Route path="" element={<RegisterContest />} />
               </Route>
               <Route path="*" element={<Navigate to="" />} />
