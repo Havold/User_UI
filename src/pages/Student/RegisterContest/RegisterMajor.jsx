@@ -21,6 +21,7 @@ import useAPI from "hooks/useApi";
 import { addMajor, deleteMajor, updateMajor } from "services/user";
 import { toast } from "react-toastify";
 import useGetUser from "hooks/useGetUser";
+
 const RegisterMajor = () => {
   const [open, setOpen] = useState(false);
   return (
@@ -183,11 +184,14 @@ const MajorModal = ({ open, onClose }) => {
   );
 };
 const MajorItem = ({ index, majors_name, school_name, onUpdate, onDelete }) => {
+  const currentUser = useSelector((state) => state.currentUser);
+  const isDisable = currentUser?.exam_info;
   return (
     <TableRow>
       <TableCell>
         <div className="flex flex-row gap-1 items-center gap-2">
           <IconButton
+            disabled={isDisable}
             sx={{ padding: 0, width: 18, height: 18 }}
             onClick={() => onUpdate(index - 1, index)}
           >
@@ -202,6 +206,7 @@ const MajorItem = ({ index, majors_name, school_name, onUpdate, onDelete }) => {
           </Typography>
           {index !== 1 ? (
             <IconButton
+              disabled={isDisable}
               onClick={() => onUpdate(index - 1, index - 2)}
               sx={{ padding: 0, rotate: "180deg", width: 18, height: 18 }}
             >
@@ -220,6 +225,7 @@ const MajorItem = ({ index, majors_name, school_name, onUpdate, onDelete }) => {
       <TableCell align="center">{school_name}</TableCell>
       <TableCell align="center">
         <IconButton
+          disabled={isDisable}
           onClick={() => onDelete(index - 1)}
           sx={{ width: 16, height: 16, padding: 0 }}
         >
