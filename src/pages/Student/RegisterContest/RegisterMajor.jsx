@@ -145,15 +145,15 @@ const MajorModal = ({ open, onClose }) => {
             onChange={handleChange}
           />
           <MyInput
-            value={formValue.majors_id}
+            value={formValue.majors_name}
             label="Tên ngành"
-            name="majors_id"
+            name="majors_name"
             onChange={handleChange}
           />
           <MyInput
-            value={formValue.majors_name}
+            value={formValue.majors_id}
             label="Mã ngành"
-            name="majors_name"
+            name="majors_id"
             onChange={handleChange}
           />
         </div>
