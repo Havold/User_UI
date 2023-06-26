@@ -4,18 +4,19 @@ import { ReactComponent as IconUser } from "assets/icon/icon_user.svg";
 import { ReactComponent as IconHome } from "assets/icon/icon_home.svg";
 import { ReactComponent as IconEducation } from "assets/icon/icon_mortarboard.svg";
 import React from "react";
-import {
-  Link,
-  Navigate,
-  Outlet,
-  useLocation,
-} from "react-router-dom";
+import { Link, Navigate, Outlet, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 const StudentLayout = () => {
   const loginStatus = useSelector((state) => state.loginStatus);
+  const currentUser = useSelector((state) => state.currentUser);
   if (loginStatus.isChecking) return <CircularProgress />;
   if (!loginStatus.isLogin) return <Navigate to="/auth/login" />;
+  if (currentUser?.register_contest_form) {
+    toast.error("Không thể chỉnh sửa sau khi đã đăng ký");
+    return <Navigate to="/register_contest" />;
+  }
   return (
     <div className="flex flex-col  pt-4 gap-4 items-center w-full h-full p-8">
       <Typography

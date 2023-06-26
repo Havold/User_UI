@@ -12,12 +12,14 @@ import useAPI from "hooks/useApi";
 import useGetUser from "hooks/useGetUser";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { Navigate, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { commune_list, district_list, province_list } from "services/data";
 import { updateUser } from "services/user";
 
 const StudentContactInfo = () => {
   const currentUser = useSelector((state) => state.currentUser);
+  const navigate = useNavigate();
   const [formValue, setFormValue] = useState({
     household: {
       phone: "",
@@ -72,6 +74,7 @@ const StudentContactInfo = () => {
       .then((res) => {
         getUser.run();
         toast.success("Cập nhật thành công");
+        navigate("/priority");
       })
       .catch((err) => {});
   };
@@ -99,6 +102,8 @@ const StudentContactInfo = () => {
     }));
   };
   if (!formValue) return <></>;
+  if (currentUser.register_contest_form)
+    return <Navigate to="/register_contest" />;
   return (
     <div className="flex flex-col p-8 border-[1px] border-[#D3D3D3] rounded-[12px] gap-3">
       <Backdrop sx={{ zIndex: 20 }} open={updateRequest.loading}>

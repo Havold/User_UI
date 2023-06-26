@@ -17,6 +17,7 @@ import { updateUser, updateUserCCCD } from "services/user";
 import { toast } from "react-toastify";
 import dayjs from "dayjs";
 import useGetUser from "hooks/useGetUser";
+import { useNavigate } from "react-router-dom";
 
 const defaultForm = {
   name: "",
@@ -42,6 +43,7 @@ const StudentInfo = () => {
     const { name, value } = e.target;
     setFormValue((prev) => ({ ...prev, [name]: value }));
   };
+  const navigate = useNavigate();
   const getUser = useGetUser();
 
   const handleUpdate = () => {
@@ -67,6 +69,7 @@ const StudentInfo = () => {
           .then((res) => {
             getUser.run();
             toast.success("Cập nhật thành công");
+            navigate("/contact");
           })
           .catch((err) => {
             toast.error("Cập nhật ảnh CCCD thất bại");

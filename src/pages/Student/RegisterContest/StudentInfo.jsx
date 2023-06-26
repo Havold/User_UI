@@ -2,14 +2,24 @@ import { Typography } from "@mui/material";
 import dayjs from "dayjs";
 import React from "react";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const StudentInfo = () => {
   const currentUser = useSelector((state) => state.currentUser);
   return (
     <div className="flex flex-col gap-7">
-      <Typography sx={{ fontSize: 24, fontWeight: 600 }}>
-        Thông tin thí sinh
-      </Typography>
+      <div className="flex flex-row items-center">
+        <Typography sx={{ fontSize: 24, fontWeight: 600 }}>
+          Thông tin thí sinh
+        </Typography>
+        <Link style={{ marginLeft: "auto" }} to="/info">
+          <Typography
+            sx={{ ml: "auto", fontSize: 16, fontWeight: 600, color: "#2760D3" }}
+          >
+            Sửa thông tin
+          </Typography>
+        </Link>
+      </div>
       <div className="grid grid-cols-3 border-[1px] border-[#D3D3D3] rounded-[12px] w-full py-6 px-6 gap-8">
         <Typography sx={{ fontSize: 16, fontWeight: 600 }}>
           Họ và tên: <span className="font-[400]">{currentUser?.name}</span>
@@ -30,7 +40,7 @@ const StudentInfo = () => {
         <Typography sx={{ fontSize: 16, fontWeight: 600 }}>
           Ngày cấp:{" "}
           <span className="font-[400]">
-            {currentUser?.CCCD_detail?.date_provide}
+            {dayjs(currentUser?.CCCD_detail?.date_provide).format("DD/MM/YYYY")}
           </span>
         </Typography>{" "}
         <Typography sx={{ fontSize: 16, fontWeight: 600 }}>
@@ -65,6 +75,12 @@ const StudentInfo = () => {
             {currentUser?.contact_info?.contact.province}
           </span>
         </Typography>{" "}
+        <Typography sx={{ fontSize: 16, fontWeight: 600 }}>
+          Tổ hợp môn:{" "}
+          <span className="font-[400]">
+            {currentUser.register_contest_form.exam_type}
+          </span>
+        </Typography>
       </div>
     </div>
   );

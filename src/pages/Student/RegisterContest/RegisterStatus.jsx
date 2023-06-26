@@ -63,7 +63,9 @@ const RegisterItem = () => {
           </Typography>{" "}
           <Typography sx={{ fontSize: 20, fontWeight: 400, color: "#717171" }}>
             Mã hồ sơ:{" "}
-            <span className="font-[700] text-[#FF0000]">{currentUser.id}</span>
+            <span className="font-[700] text-[#FF0000]">
+              {currentUser.register_contest_form.id}
+            </span>
           </Typography>
         </>
       ) : (

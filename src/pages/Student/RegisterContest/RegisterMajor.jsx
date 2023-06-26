@@ -166,7 +166,7 @@ const MajorModal = ({ open, onClose }) => {
               formValue.majors_name.length &&
               formValue.school_id.length &&
               formValue.school_name.length
-            )
+            ) || currentUser?.register_contest_form
           }
           sx={{
             fontSize: 21,
@@ -185,7 +185,7 @@ const MajorModal = ({ open, onClose }) => {
 };
 const MajorItem = ({ index, majors_name, school_name, onUpdate, onDelete }) => {
   const currentUser = useSelector((state) => state.currentUser);
-  const isDisable = currentUser?.exam_info;
+  const isDisable = currentUser?.register_contest_form;
   return (
     <TableRow>
       <TableCell>
