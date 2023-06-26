@@ -106,12 +106,12 @@ const PointInfo = () => {
                 </TableCell>
                 <TableCell align="center">
                   <Typography sx={{ fontSize: 16, fontWeight: 400 }}>
-                    {major.major_id}
+                    {major.school_id}
                   </Typography>
                 </TableCell>
                 <TableCell align="center">
                   <Typography sx={{ fontSize: 16, fontWeight: 400 }}>
-                    {major.major_name}
+                    {major.majors_id}
                   </Typography>
                 </TableCell>
                 <TableCell align="center">
