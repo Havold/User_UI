@@ -78,7 +78,7 @@ const StudentInfo = () => {
         <Typography sx={{ fontSize: 16, fontWeight: 600 }}>
           Tổ hợp môn:{" "}
           <span className="font-[400]">
-            {currentUser.register_contest_form.exam_type}
+            {currentUser.register_contest_form?.exam_type}
           </span>
         </Typography>
       </div>
